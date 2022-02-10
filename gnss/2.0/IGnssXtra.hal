@@ -1,0 +1,10 @@
+package vendor.sprd.hardware.gnss@2.0;
+import android.hardware.gnss@1.0;
+import android.hardware.gnss@1.0::IGnssXtraCallback;
+
+/**
+ * This interface is used by the GNSS HAL to request the framework
+ * to download XTRA data.
+ */
+interface IGnssXtra extends android.hardware.gnss@1.0::IGnssXtra {
+};

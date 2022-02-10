@@ -1,0 +1,48 @@
+cc_library_shared {
+    name: "vendor.sprd.hardware.log@1.0-impl",
+    relative_install_path: "hw",
+    proprietary: true,
+    srcs: [
+        "LogControl.cpp",
+        "CmdListener.cpp",
+    ],
+    shared_libs: [
+        "libhidlbase",
+        "liblog",
+        "libsysutils",
+        "libhardware",
+        "libcutils",
+        "libhidltransport",
+        "libutils",
+        "vendor.sprd.hardware.log@1.0",
+    ],
+}
+cc_binary {
+    proprietary: true,
+    relative_install_path: "hw",
+    name: "vendor.sprd.hardware.log@1.0-service",
+    init_rc: ["vendor.sprd.hardware.log@1.0-service.rc"],
+    srcs: [
+         "service.cpp",
+         //"CmdListener.cpp",
+    ],
+
+    cflags: [
+        "-Wall",
+        "-Werror",
+    ],
+
+    shared_libs: [
+        "liblog",
+        "libsysutils",
+        "libdl",
+        "libutils",
+        "libcutils",
+        "libhardware",
+        "libhidlbase",
+        "libhidltransport",
+        "vendor.sprd.hardware.log@1.0",
+        //"vendor.sprd.hardware.log@1.0-impl"
+    ],
+}
+

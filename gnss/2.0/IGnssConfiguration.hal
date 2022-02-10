@@ -1,0 +1,9 @@
+package vendor.sprd.hardware.gnss@2.0;
+import android.hardware.gnss@2.0;
+
+/**
+ * Interface for passing GNSS configuration info from platform to HAL.
+ */
+interface IGnssConfiguration extends android.hardware.gnss@2.0::IGnssConfiguration {
+
+};

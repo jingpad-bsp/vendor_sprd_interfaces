@@ -1,0 +1,15 @@
+package vendor.sprd.hardware.tuistate@1.0;
+
+import ITuiStateChangeCallback;
+
+interface ITuistate {
+
+    /**
+     * listenTuiState
+     * Parameters:
+     * - stateChangeCb: callback on tui state changed
+     */
+    listenTuiState(ITuiStateChangeCallback stateChangeClientCb) generates (int32_t err);
+    notify(bool tuion);
+
+};

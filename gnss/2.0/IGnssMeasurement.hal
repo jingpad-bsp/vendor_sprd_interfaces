@@ -1,0 +1,10 @@
+package vendor.sprd.hardware.gnss@2.0;
+import android.hardware.gnss@2.0::IGnssMeasurement;
+import android.hardware.gnss@2.0::IGnssMeasurementCallback;
+
+/**
+ * Extended interface for GNSS Measurements support.
+ */
+interface IGnssMeasurement extends android.hardware.gnss@2.0::IGnssMeasurement {
+
+};

@@ -1,0 +1,7 @@
+package vendor.sprd.hardware.gnss@2.0;
+import android.hardware.gnss@2.0::IGnssDebug;
+
+/** Extended interface for DEBUG support. */
+interface IGnssDebug extends android.hardware.gnss@2.0::IGnssDebug {
+
+};

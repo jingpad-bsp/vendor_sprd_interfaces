@@ -1,0 +1,79 @@
+package vendor.sprd.hardware.radio@1.0;
+
+/**
+ * Interface declaring sprd extension unsolicited radio indications.
+ */
+interface IExtRadioIndication {
+
+    updatePlmn(string data, int32_t lac) generates (string response);
+
+    updateNetworkList(vec<string> data) generates (string response);
+
+    oneway videoPhoneCodecInd(ExtRadioIndicationType type, vec<int32_t> data);
+
+    oneway videoPhoneDSCIInd(ExtRadioIndicationType type, VideoPhoneDSCI data);
+
+    oneway videoPhoneStringInd(ExtRadioIndicationType type, string data);
+
+    oneway videoPhoneRemoteMediaInd(ExtRadioIndicationType type, vec<int32_t> data);
+
+    oneway videoPhoneMMRingInd(ExtRadioIndicationType type, int32_t data);
+
+    oneway videoPhoneReleasingInd(ExtRadioIndicationType type, string data);
+
+    oneway videoPhoneRecordVideoInd(ExtRadioIndicationType type, int32_t data);
+
+    oneway videoPhoneMediaStartInd(ExtRadioIndicationType type, int32_t data);
+
+    oneway rauSuccessInd(ExtRadioIndicationType type);
+
+    oneway clearCodeFallbackInd(ExtRadioIndicationType type);
+
+    oneway rilConnectedInd(ExtRadioIndicationType type);
+
+    oneway simlockSimExpiredInd(ExtRadioIndicationType type, int32_t data);
+
+    oneway networkErrorCodeInd(ExtRadioIndicationType type, vec<int32_t> data);
+
+    oneway simMgrSimStatusChangedInd(ExtRadioIndicationType type);
+
+    oneway earlyMediaInd(ExtRadioIndicationType type, int32_t data);
+
+    oneway availableNetworksInd(ExtRadioIndicationType type, vec<string> data);
+
+    oneway IMSCallStateChangedInd(ExtRadioIndicationType type);
+
+    oneway videoQualityInd(ExtRadioIndicationType type, vec<int32_t> data);
+
+    oneway IMSBearerEstablished(ExtRadioIndicationType type, int32_t status);
+
+    oneway IMSHandoverRequestInd(ExtRadioIndicationType type, int32_t status);
+
+    oneway IMSHandoverStatusChangedInd(ExtRadioIndicationType type, int32_t status);
+
+    oneway IMSNetworkInfoChangedInd(ExtRadioIndicationType type, ImsNetworkInfo nwInfo);
+
+    oneway IMSRegisterAddressChangedInd(ExtRadioIndicationType type, vec<string> data);
+
+    oneway IMSWifiParamInd(ExtRadioIndicationType type, vec<int32_t> data);
+
+    oneway IMSNetworkStateChangedInd(ExtRadioIndicationType type, int32_t status);
+
+    oneway updateHdStateInd(ExtRadioIndicationType type, int32_t data);
+
+    oneway subsidyLockStatusChangedInd(ExtRadioIndicationType type, int32_t data);
+
+    oneway IMSCsfbVendorCauseInd(ExtRadioIndicationType type, string csfbVendorCause);
+
+    oneway IMSErrorCauseInd(ExtRadioIndicationType type, ImsErrorCauseInfo errCauseInfo);
+
+    oneway cnapInd(ExtRadioIndicationType type, string name);
+
+    oneway signalConnStatusInd(ExtRadioIndicationType info, SignalConnStatus sigConnStatus);
+
+    oneway smartNrChangedInd(ExtRadioIndicationType type);
+
+    oneway nrCfgInfoInd(ExtRadioIndicationType type, vec<int32_t> data);
+
+    oneway modemStateChangedInd(ExtRadioIndicationType type, ModemStatusInfo statusInfo);
+};

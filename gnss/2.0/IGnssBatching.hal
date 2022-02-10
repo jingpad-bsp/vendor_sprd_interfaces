@@ -1,0 +1,8 @@
+
+package vendor.sprd.hardware.gnss@2.0;
+import android.hardware.gnss@2.0::IGnssBatching;
+import android.hardware.gnss@2.0::IGnssBatchingCallback;
+interface IGnssBatching extends android.hardware.gnss@2.0::IGnssBatching {
+
+
+};

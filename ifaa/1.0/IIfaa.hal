@@ -1,0 +1,14 @@
+package vendor.sprd.hardware.ifaa@1.0;
+
+interface IIfaa {
+
+    /**
+     * process cmd V2.
+     * Parameters:
+     * - param: param of request
+     *
+     * Returns: answer of request.
+     */
+    processCmdV2(vec<uint8_t > param) generates (vec<uint8_t > processCmdV2Ret);
+
+};

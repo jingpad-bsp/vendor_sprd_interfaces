@@ -1,0 +1,12 @@
+package vendor.sprd.hardware.wifi.supplicant@1.2;
+
+import android.hardware.wifi.supplicant@1.0::ISupplicantStaNetworkCallback;
+
+interface ISupplicantStaNetworkCallbackEx extends android.hardware.wifi.supplicant@1.0::ISupplicantStaNetworkCallback{
+    /**
+      * Used to  report network event.
+      * @param event.
+      */
+    oneway onNetworkEventEx(string event);
+
+};

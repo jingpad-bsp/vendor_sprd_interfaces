@@ -1,0 +1,16 @@
+package vendor.sprd.hardware.radio.lite@1.0;
+
+import ILiteRadioResponse;
+import ILiteRadioIndication;
+
+interface ILiteRadio {
+    /**
+     * Set response functions for lite radio requests & radio indications.
+     *
+     * @param radioResponse Object containing response functions
+     * @param radioIndication Object containing radio indications
+     */
+    setResponseFunctions(ILiteRadioResponse radioResponse, ILiteRadioIndication radioIndication);
+
+    oneway sendCmd(int32_t serial, string str);
+};

@@ -1,0 +1,76 @@
+/*
+ * Copyright (C) 2016 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
+package vendor.sprd.hardware.fingerprintmmi@1.0;
+
+
+interface IFingerprintmmi {
+
+    /*
+     * Do sth init for fp factory test
+     *
+     * Function return: 0 if factory_init pass
+     *                  otherwise, -1
+     */
+    factory_init() generates (uint32_t result);
+
+
+    /*
+     * test spi,example:read chipid ok
+     *
+     * Function return: 0 if spi_test pass
+     *                  otherwise, -1
+     */
+    spi_test() generates (uint32_t result);
+
+
+    /*
+     * test spi,example:read chipid ok
+     *
+     * Function return: 0 if spi_test pass
+     *                  otherwise, -1
+     */
+    deadpixel_test() generates (uint32_t result);
+
+
+    /*
+     * test spi,example:read chipid ok
+     *
+     * Function return: 0 if spi_test pass
+     *                  otherwise, -1
+     */
+    interrupt_test() generates (uint32_t result);
+
+
+    /*
+     * test spi,example:read chipid ok
+     *
+     * Function return: 0 if spi_test pass
+     *                  otherwise, -1
+     */
+    finger_detect() generates (uint32_t result);
+
+
+    /*
+     * test spi,example:read chipid ok
+     *
+     * Function return: 0 if spi_test pass
+     *                  otherwise, -1
+     */
+    factory_exit() generates (uint32_t result);
+
+};

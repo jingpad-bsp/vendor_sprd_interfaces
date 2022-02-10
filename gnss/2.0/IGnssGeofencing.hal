@@ -1,0 +1,8 @@
+package vendor.sprd.hardware.gnss@2.0;
+import android.hardware.gnss@1.0;
+import android.hardware.gnss@1.0::IGnssGeofenceCallback;
+
+/** Extended interface for GNSS Geofencing support */
+interface IGnssGeofencing extends android.hardware.gnss@1.0::IGnssGeofencing {
+
+};

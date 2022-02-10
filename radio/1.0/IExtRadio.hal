@@ -1,0 +1,134 @@
+package vendor.sprd.hardware.radio@1.0;
+
+import IExtRadioResponse;
+import IExtRadioIndication;
+import IAtcRadioResponse;
+import IAtcRadioIndication;
+
+interface IExtRadio {
+    /**
+     * Set response functions for extension radio requests & radio indications.
+     *
+     * @param radioResponse Object containing response functions
+     * @param radioIndication Object containing radio indications
+     */
+    setExtResponseFunctions(IExtRadioResponse radioResponse, IExtRadioIndication radioIndication);
+    setAtcResponseFunctions(IAtcRadioResponse radioResponse, IAtcRadioIndication radioIndication);
+
+    sendCmdSync(int32_t phoneId, string cmd) generates (string response);
+
+    /**
+     * When response type received from a radio indication or radio response is
+     * RadioIndicationType:UNSOLICITED_ACK_EXP or RadioResponseType:SOLICITED_ACK_EXP respectively,
+     * acknowledge the receipt of those messages by sending responseAcknowledgement().
+     *
+     */
+    oneway responseAcknowledgement();
+
+    /**
+     * SPRD extension interfaces
+     */
+    oneway videoPhoneDial(int32_t serial, VideoPhoneDial dialInfo);
+    oneway videoPhoneCodec(int32_t serial, VideoPhoneCodec codec);
+    oneway videoPhoneFallback(int32_t serial);
+    oneway videoPhoneString(int32_t serial, string str);
+    oneway videoPhoneLocalMedia(int32_t serial, int32_t dataType, int32_t sw, bool beReplaceImg);
+    oneway videoPhoneControlIFrame(int32_t serial, bool isIFrame, bool needIFrame);
+    oneway setTrafficClass(int32_t serial, int32_t type);
+    oneway enableLTE(int32_t serial, bool enabled);
+    oneway attachData(int32_t serial, bool enabled);
+    oneway forceDeatch(int32_t serial);
+    oneway getHDVoiceState(int32_t serial);
+    oneway simmgrSimPower(int32_t serial, bool enabled);
+    oneway enableRauNotify(int32_t serial);
+    oneway simGetAtr(int32_t serial);
+    oneway explicitCallTransferExt(int32_t serial);
+    oneway getSimCapacity(int32_t serial);
+    oneway storeSmsToSim(int32_t serial, bool enabled);
+    oneway querySmsStorageMode(int32_t serial);
+    oneway getSimlockRemaintimes(int32_t serial, int32_t type);
+    oneway setFacilityLockForUser(int32_t serial, string facility, bool lockState);
+    oneway getSimlockStatus(int32_t serial, int32_t type);
+    oneway getSimlockDummys(int32_t serial);
+    oneway getSimlockWhitelist(int32_t serial, int32_t type); // not realized in radiointeractor
+    oneway updateEcclist(int32_t serial, string ecclist);
+    oneway setSinglePDN(int32_t serial, bool isSinglePDN);
+    oneway queryColp(int32_t serial);
+    oneway queryColr(int32_t serial);
+    oneway updateOperatorName(int32_t serial, string plmn);
+    oneway simmgrGetSimStatus(int32_t serial);
+    oneway setXcapIPAddress(int32_t serial, string ifName, string ipv4Addr, string ipv6Addr);
+    oneway sendCmdAsync(int32_t serial, string cmd);
+    oneway reAttach(int32_t serial);
+    oneway setPreferredNetworkTypeExt(int32_t serial, ExtPreferredNetworkType nwType);
+    oneway requestShutdownExt(int32_t serial);
+    oneway updateCLIP(int32_t serial, int32_t enable);
+    oneway setTPMRState(int32_t serial, int32_t state);
+    oneway getTPMRState(int32_t serial);
+    oneway setVideoResolution(int32_t serial, int32_t resolution);
+    oneway enableLocalHold(int32_t serial, bool enable);
+    oneway enableWiFiParamReport(int32_t serial, bool enable);
+    oneway callMediaChangeRequestTimeOut(int32_t serial, int32_t callId);
+    oneway setLocalTone(int32_t serial, int32_t state);
+    oneway queryPlmn(int32_t serial, int32_t type);
+    oneway updatePlmnPriority(int32_t serial, int32_t type, int32_t action, int32_t plmn,
+            int32_t act1, int32_t act2, int32_t act3);
+    oneway setSimPowerReal(int32_t serial, bool enable);
+    oneway getRadioPreference(int32_t serial, string key);
+    oneway setRadioPreference(int32_t serial, string key, string value);
+    oneway getIMSCurrentCalls(int32_t serial);
+    oneway setIMSVoiceCallAvailability(int32_t serial, int32_t state);
+    oneway getIMSVoiceCallAvailability(int32_t serial);
+    oneway initISIM(int32_t serial);
+    oneway requestVolteCallMediaChange(int32_t serial, int32_t callID, int32_t mediaRequest);
+    oneway responseVolteCallMediaChange(int32_t serial, int32_t callID, bool isAccept, int32_t videoCallMediaDirection);
+    oneway setIMSSmscAddress(int32_t serial, string smsc);
+    oneway volteCallFallBackToVoice(int32_t serial, int32_t callID);
+    oneway queryCallForwardStatus(int32_t serial, CallForwardInfoUri info);
+    oneway setCallForwardUri(int32_t serial, CallForwardInfoUri info);
+    oneway IMSInitialGroupCall(int32_t serial, string numbers);
+    oneway IMSAddGroupCall(int32_t serial, string numbers);
+    oneway enableIMS(int32_t serial, bool enabled);
+    oneway getIMSBearerState(int32_t serial);
+    oneway setExtInitialAttachApn(int32_t serial, ExtDataProfileInfo dataProfileInfo);
+    oneway IMSHandover(int32_t serial, int32_t type);
+    oneway notifyIMSHandoverStatusUpdate(int32_t serial, int32_t status);
+    oneway notifyIMSNetworkInfoChanged(int32_t serial, ImsNetworkInfo networkInfo);
+    oneway notifyIMSCallEnd(int32_t serial, int32_t type);
+    oneway notifyVoWifiEnable(int32_t serial, bool enable);
+    oneway notifyVoWifiCallStateChanged(int32_t serial, bool inCall);
+    oneway notifyDataRouterUpdate(int32_t serial);
+    oneway IMSHoldSingleCall(int32_t serial, int32_t callId, bool enable);
+    oneway IMSMuteSingleCall(int32_t serial, int32_t callId, bool enable);
+    oneway IMSSilenceSingleCall(int32_t serial, int32_t callId, bool enable);
+    oneway IMSEnableLocalConference(int32_t serial, bool enable);
+    oneway notifyHandoverCallInfo(int32_t serial, string callInfo);
+    oneway getSrvccCapbility(int32_t serial);
+    oneway setIMSPcscfAddress(int32_t serial, string addr);
+    oneway getIMSPcscfAddress(int32_t serial);
+    oneway getFacilityLockForAppExt(int32_t serial, string facility,
+                     string password, int32_t serviceClass, string appId);
+    oneway getImsRegAddress(int32_t  serial);
+    oneway vsimSendCmd(int32_t serial, int32_t phoneId, string cmd);
+    oneway getPreferredNetworkTypeExt(int32_t serial);
+    oneway setRadioPowerFallback(int32_t serial, bool enable);
+    oneway getCnap(int32_t serial);
+    oneway setLocationInfo(int32_t serial, string longitude, string latitude);
+    oneway getSpecialRatcap(int32_t serial, int32_t value);
+    oneway getVideoResolution(int32_t serial);
+    oneway getImsPaniInfo(int32_t serial);
+    oneway setEmergencyOnly(int32_t serial, int32_t emergencyOnly);
+    oneway getSubsidyLockdyStatus(int32_t serial);
+    oneway setImsUserAgent(int32_t serial, string sipUserAgent);
+    oneway resetModem(int32_t serial);
+    oneway getVoLTEAllowedPLMN(int32_t serial);
+    oneway setSmsBearer(int32_t serial, int32_t type);
+    oneway getSmsBearer(int32_t serial);
+    oneway queryRootNode(int32_t serial);
+    oneway setPsDataOff(int32_t serial, bool enable, int32_t exemptionInfo);
+    oneway requestLteSpeedAndSignalStrength(int32_t serial);
+    oneway enableNrSwitch(int32_t serial, int32_t mode, int32_t enable);
+    oneway setUsbShareStateSwitch(int32_t serial, bool switchState);
+    oneway setStandAlone(int32_t serial, int32_t value);
+    oneway getStandAlone(int32_t serial);
+};

@@ -1,0 +1,5 @@
+package vendor.sprd.hardware.aprd@1.0;
+
+interface IAprdCallback {
+    triger(string cmd, e_info_V ei);
+};

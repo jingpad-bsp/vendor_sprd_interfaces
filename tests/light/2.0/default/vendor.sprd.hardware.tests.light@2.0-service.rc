@@ -1,0 +1,4 @@
+service light-extk-2-0 /vendor/bin/hw/vendor.sprd.hardware.tests.light@2.0-service
+    class hal
+    user system
+    group system

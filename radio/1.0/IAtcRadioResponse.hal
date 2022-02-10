@@ -1,0 +1,10 @@
+package vendor.sprd.hardware.radio@1.0;
+
+/**
+ * Interface declaring response functions to solicited radio requests.
+ * Response functions defined in this interface are as per following convention:
+ * <xyz>Response is response to IExtRadio.<xyz>
+ */
+interface IAtcRadioResponse {
+    oneway vsimSendCmdResponse(ExtRadioResponseInfo info, string response);
+};

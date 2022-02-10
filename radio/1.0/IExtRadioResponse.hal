@@ -1,0 +1,209 @@
+package vendor.sprd.hardware.radio@1.0;
+
+/**
+ * Interface declaring response functions to solicited radio requests.
+ * Response functions defined in this interface are as per following convention:
+ * <xyz>Response is response to IExtRadio.<xyz>
+ */
+interface IExtRadioResponse {
+    oneway videoPhoneDialResponse(ExtRadioResponseInfo info);
+
+    oneway videoPhoneCodecResponse(ExtRadioResponseInfo info);
+
+    oneway videoPhoneFallbackResponse(ExtRadioResponseInfo info);
+
+    oneway videoPhoneStringResponse(ExtRadioResponseInfo info);
+
+    oneway videoPhoneLocalMediaResponse(ExtRadioResponseInfo info);
+
+    oneway videoPhoneControlIFrameResponse(ExtRadioResponseInfo info);
+
+    oneway setTrafficClassResponse(ExtRadioResponseInfo info);
+
+    oneway enableLTEResponse(ExtRadioResponseInfo info);
+
+    oneway attachDataResponse(ExtRadioResponseInfo info);
+
+    oneway forceDeatchResponse(ExtRadioResponseInfo info);
+
+    oneway getHDVoiceStateResponse(ExtRadioResponseInfo info, int32_t state);
+
+    oneway simmgrSimPowerResponse(ExtRadioResponseInfo info);
+
+    oneway enableRauNotifyResponse(ExtRadioResponseInfo info);
+
+    oneway simGetAtrResponse(ExtRadioResponseInfo info, string atr);
+
+    oneway explicitCallTransferExtResponse(ExtRadioResponseInfo info);
+
+    oneway getSimCapacityResponse(ExtRadioResponseInfo info, vec<string> data);
+
+    oneway storeSmsToSimResponse(ExtRadioResponseInfo info);
+
+    oneway querySmsStorageModeResponse(ExtRadioResponseInfo info, string atr);
+
+    oneway getSimlockRemaintimesResponse(ExtRadioResponseInfo info, int32_t remainingRetries);
+
+    oneway setFacilityLockForUserResponse(ExtRadioResponseInfo info);
+
+    oneway getSimlockStatusResponse(ExtRadioResponseInfo info, int32_t status);
+
+    oneway getSimlockDummysResponse(ExtRadioResponseInfo info, vec<int32_t> selectResponse);
+
+    oneway getSimlockWhitelistResponse(ExtRadioResponseInfo info, string whitelist);
+
+    oneway updateEcclistResponse(ExtRadioResponseInfo info);
+
+    oneway setSinglePDNResponse(ExtRadioResponseInfo info);
+
+    oneway queryColpResponse(ExtRadioResponseInfo info, int32_t result);
+
+    oneway queryColrResponse(ExtRadioResponseInfo info, int32_t result);
+
+    oneway updateOperatorNameResponse(ExtRadioResponseInfo info);
+
+    oneway simmgrGetSimStatusResponse(ExtRadioResponseInfo info, ExtCardStatus cardStatus);
+
+    oneway setXcapIPAddressResponse(ExtRadioResponseInfo info);
+
+    oneway sendCmdAsyncResponse(ExtRadioResponseInfo info, string response);
+
+    oneway reAttachResponse(ExtRadioResponseInfo info);
+
+    oneway setPreferredNetworkTypeExtResponse(ExtRadioResponseInfo info);
+
+    oneway requestShutdownExtResponse(ExtRadioResponseInfo info);
+
+    oneway updateCLIPResponse(ExtRadioResponseInfo info);
+
+    oneway setTPMRStateResponse(ExtRadioResponseInfo info);
+
+    oneway getTPMRStateResponse(ExtRadioResponseInfo info, int32_t result);
+
+    oneway setVideoResolutionResponse(ExtRadioResponseInfo info);
+
+    oneway enableLocalHoldResponse(ExtRadioResponseInfo info);
+
+    oneway enableWiFiParamReportResponse(ExtRadioResponseInfo info);
+
+    oneway callMediaChangeRequestTimeOutResponse(ExtRadioResponseInfo info);
+
+    oneway setLocalToneResponse(ExtRadioResponseInfo info);
+
+    oneway updatePlmnPriorityResponse(ExtRadioResponseInfo info);
+
+    oneway queryPlmnResponse(ExtRadioResponseInfo info, string response);
+
+    oneway setSimPowerRealResponse(ExtRadioResponseInfo info);
+
+    oneway getRadioPreferenceResponse(ExtRadioResponseInfo info, string response);
+
+    oneway setRadioPreferenceResponse(ExtRadioResponseInfo info);
+
+    oneway getIMSCurrentCallsResponse(ExtRadioResponseInfo info, vec<CallVoLTE> calls);
+
+    oneway setIMSVoiceCallAvailabilityResponse(ExtRadioResponseInfo info);
+
+    oneway getIMSVoiceCallAvailabilityResponse(ExtRadioResponseInfo info, int32_t state);
+
+    oneway initISIMResponse(ExtRadioResponseInfo info, int32_t response);
+
+    oneway requestVolteCallMediaChangeResponse(ExtRadioResponseInfo info);
+
+    oneway responseVolteCallMediaChangeResponse(ExtRadioResponseInfo info);
+
+    oneway setIMSSmscAddressResponse(ExtRadioResponseInfo info);
+
+    oneway volteCallFallBackToVoiceResponse(ExtRadioResponseInfo info);
+
+    oneway queryCallForwardStatusResponse(ExtRadioResponseInfo info, vec<CallForwardInfoUri> callForwardInfos);
+
+    oneway setCallForwardUriResponse(ExtRadioResponseInfo info);
+
+    oneway IMSInitialGroupCallResponse(ExtRadioResponseInfo info);
+
+    oneway IMSAddGroupCallResponse(ExtRadioResponseInfo info);
+
+    oneway enableIMSResponse(ExtRadioResponseInfo info);
+
+    oneway getIMSBearerStateResponse(ExtRadioResponseInfo info, int32_t state);
+
+    oneway setExtInitialAttachApnResponse(ExtRadioResponseInfo info);
+
+    oneway IMSHandoverResponse(ExtRadioResponseInfo info);
+
+    oneway notifyIMSHandoverStatusUpdateResponse(ExtRadioResponseInfo info);
+
+    oneway notifyIMSNetworkInfoChangedResponse(ExtRadioResponseInfo info);
+
+    oneway notifyIMSCallEndResponse(ExtRadioResponseInfo info);
+
+    oneway notifyVoWifiEnableResponse(ExtRadioResponseInfo info);
+
+    oneway notifyVoWifiCallStateChangedResponse(ExtRadioResponseInfo info);
+
+    oneway notifyDataRouterUpdateResponse(ExtRadioResponseInfo info);
+
+    oneway IMSHoldSingleCallResponse(ExtRadioResponseInfo info);
+
+    oneway IMSMuteSingleCallResponse(ExtRadioResponseInfo info);
+
+    oneway IMSSilenceSingleCallResponse(ExtRadioResponseInfo info);
+
+    oneway IMSEnableLocalConferenceResponse(ExtRadioResponseInfo info);
+
+    oneway notifyHandoverCallInfoResponse(ExtRadioResponseInfo info);
+
+    oneway getSrvccCapbilityResponse(ExtRadioResponseInfo info, int32_t response);
+
+    oneway getIMSPcscfAddressResponse(ExtRadioResponseInfo info, string addr);
+
+    oneway setIMSPcscfAddressResponse(ExtRadioResponseInfo info);
+
+    oneway getFacilityLockForAppExtResponse(ExtRadioResponseInfo info, int32_t status, int32_t serviceClass);
+
+    oneway getImsRegAddressResponse(ExtRadioResponseInfo info, vec<string> data);
+
+    oneway getPreferredNetworkTypeExtResponse(ExtRadioResponseInfo info, ExtPreferredNetworkType nwType);
+
+    oneway setRadioPowerFallbackResponse(ExtRadioResponseInfo info);
+
+    oneway getCnapResponse(ExtRadioResponseInfo info, int32_t active, int32_t status);
+
+    oneway setLocationInfoResponse(ExtRadioResponseInfo info);
+
+    oneway getSpecialRatcapResponse(ExtRadioResponseInfo info, int32_t domain);
+
+    oneway getVideoResolutionResponse(ExtRadioResponseInfo info, int32_t res);
+
+    oneway getImsPaniInfoResponse(ExtRadioResponseInfo info, ImsNetworkInfo networkInfo);
+
+    oneway setEmergencyOnlyResponse(ExtRadioResponseInfo info);
+
+    oneway getSubsidyLockdyStatusResponse(ExtRadioResponseInfo info, int32_t result);
+
+    oneway setImsUserAgentResponse(ExtRadioResponseInfo info);
+
+    oneway resetModemResponse(ExtRadioResponseInfo info);
+
+    oneway getVoLTEAllowedPLMNResponse(ExtRadioResponseInfo info, int32_t delta);
+
+    oneway setSmsBearerResponse(ExtRadioResponseInfo info);
+
+    oneway getSmsBearerResponse(ExtRadioResponseInfo info, int32_t result);
+
+    oneway queryRootNodeResponse(ExtRadioResponseInfo info);
+
+    oneway setPsDataOffResponse(ExtRadioResponseInfo info);
+
+    oneway requestLteSpeedAndSignalStrengthResponse(ExtRadioResponseInfo info,
+                                        LteSpeedAndSignalStrength speedAndStrength);
+
+    oneway enableNrSwitchResponse(ExtRadioResponseInfo info);
+
+    oneway setUsbShareStateSwitchResponse(ExtRadioResponseInfo info);
+
+    oneway setStandAloneResponse(ExtRadioResponseInfo info);
+
+    oneway getStandAloneResponse(ExtRadioResponseInfo info, int32_t Capability);
+};

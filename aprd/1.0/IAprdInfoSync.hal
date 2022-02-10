@@ -1,0 +1,8 @@
+package vendor.sprd.hardware.aprd@1.0;
+
+import IAprdCallback;
+
+interface IAprdInfoSync {
+    setCallback( IAprdCallback callback);
+    sendCmd(string cmd) generates (string ret);
+};

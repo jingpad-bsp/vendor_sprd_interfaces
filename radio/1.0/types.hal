@@ -1,0 +1,717 @@
+package vendor.sprd.hardware.radio@1.0;
+
+/******************************************************************************
+              copy from hardware/interfaces/radio and extended
+******************************************************************************/
+enum ExtRadioError : int32_t {
+    NONE = 0,                             // Success
+    RADIO_NOT_AVAILABLE = 1,              // If radio did not start or is resetting
+    GENERIC_FAILURE = 2,
+    PASSWORD_INCORRECT = 3,               // for PIN/PIN2 methods only
+    SIM_PIN2 = 4,                         // Operation requires SIM PIN2 to be entered
+    SIM_PUK2 = 5,                         // Operation requires SIM PIN2 to be entered
+    REQUEST_NOT_SUPPORTED = 6,
+    CANCELLED = 7,
+    OP_NOT_ALLOWED_DURING_VOICE_CALL = 8, // data ops are not allowed during voice
+                                          // call on a Class C GPRS device
+    OP_NOT_ALLOWED_BEFORE_REG_TO_NW = 9,  // data ops are not allowed before device
+                                          // registers in network
+    SMS_SEND_FAIL_RETRY = 10,             // fail to send sms and need retry
+    SIM_ABSENT = 11,                      // fail to set the location where CDMA subscription
+                                          // shall be retrieved because of SIM or RUIM
+                                          // card absent
+    SUBSCRIPTION_NOT_AVAILABLE = 12,      // fail to find CDMA subscription from specified
+                                          // location
+    MODE_NOT_SUPPORTED = 13,              // HW does not support preferred network type
+    FDN_CHECK_FAILURE = 14,               // command failed because recipient is not on FDN list
+    ILLEGAL_SIM_OR_ME = 15,               // network selection failed due to illegal SIM or ME
+    MISSING_RESOURCE = 16,                // no logical channel available
+    NO_SUCH_ELEMENT = 17,                 // application not found on SIM
+    DIAL_MODIFIED_TO_USSD = 18,           // DIAL request modified to USSD
+    DIAL_MODIFIED_TO_SS = 19,             // DIAL request modified to SS
+    DIAL_MODIFIED_TO_DIAL = 20,           // DIAL request modified to DIAL with different data
+    USSD_MODIFIED_TO_DIAL = 21,           // USSD request modified to DIAL
+    USSD_MODIFIED_TO_SS = 22,             // USSD request modified to SS
+    USSD_MODIFIED_TO_USSD = 23,           // USSD request modified to different USSD request
+    SS_MODIFIED_TO_DIAL = 24,             // SS request modified to DIAL
+    SS_MODIFIED_TO_USSD = 25,             // SS request modified to USSD
+    SUBSCRIPTION_NOT_SUPPORTED = 26,      // Subscription not supported by RIL
+    SS_MODIFIED_TO_SS = 27,               // SS request modified to different SS request
+    LCE_NOT_SUPPORTED = 36,               // LCE service not supported(36 in RILConstants.java)
+    NO_MEMORY = 37,                       // Not sufficient memory to process the request
+    INTERNAL_ERR = 38,                    // Modem hit unexpected error scenario while handling
+                                          // this request
+    SYSTEM_ERR = 39,                      // Hit platform or system error
+    MODEM_ERR = 40,                       // Vendor RIL got unexpected or incorrect response
+                                          // from modem for this request
+    INVALID_STATE = 41,                   // Unexpected request for the current state
+    NO_RESOURCES = 42,                    // Not sufficient resource to process the request
+    SIM_ERR = 43,                         // Received error from SIM card
+    INVALID_ARGUMENTS = 44,               // Received invalid arguments in request
+    INVALID_SIM_STATE = 45,               // Cannot process the request in current SIM state
+    INVALID_MODEM_STATE = 46,             // Cannot process the request in current Modem state
+    INVALID_CALL_ID = 47,                 // Received invalid call id in request
+    NO_SMS_TO_ACK = 48,                   // ACK received when there is no SMS to ack
+    NETWORK_ERR = 49,                     // Received error from network
+    REQUEST_RATE_LIMITED = 50,            // Operation denied due to overly-frequent requests
+    SIM_BUSY = 51,                        // SIM is busy
+    SIM_FULL = 52,                        // The target EF is full
+    NETWORK_REJECT = 53,                  // Request is rejected by network
+    OPERATION_NOT_ALLOWED = 54,           // Not allowed the request now
+    EMPTY_RECORD = 55,                    // The request record is empty
+    INVALID_SMS_FORMAT = 56,              // Invalid sms format
+    ENCODING_ERR = 57,                    // Message not encoded properly
+    INVALID_SMSC_ADDRESS = 58,            // SMSC address specified is invalid
+    NO_SUCH_ENTRY = 59,                   // No such entry present to perform the request
+    NETWORK_NOT_READY = 60,               // Network is not ready to perform the request
+    NOT_PROVISIONED = 61,                 // Device does not have this value provisioned
+    NO_SUBSCRIPTION = 62,                 // Device does not have subscription
+    NO_NETWORK_FOUND = 63,                // Network cannot be found
+    DEVICE_IN_USE = 64,                   // Operation cannot be performed because the device
+                                          // is currently in use
+    ABORTED = 65,                         // Operation aborted
+    INVALID_RESPONSE = 66,                // Response from vendor had invalid data
+
+    OEM_ERROR_1 = 501,
+    OEM_ERROR_2 = 502,
+    OEM_ERROR_3 = 503,
+    OEM_ERROR_4 = 504,
+    OEM_ERROR_5 = 505,
+    OEM_ERROR_6 = 506,
+    OEM_ERROR_7 = 507,
+    OEM_ERROR_8 = 508,
+    OEM_ERROR_9 = 509,
+    OEM_ERROR_10 = 510,
+    OEM_ERROR_11 = 511,
+    OEM_ERROR_12 = 512,
+    OEM_ERROR_13 = 513,
+    OEM_ERROR_14 = 514,
+    OEM_ERROR_15 = 515,
+    OEM_ERROR_16 = 516,
+    OEM_ERROR_17 = 517,
+    OEM_ERROR_18 = 518,
+    OEM_ERROR_19 = 519,
+    OEM_ERROR_20 = 520,
+    OEM_ERROR_21 = 521,
+    OEM_ERROR_22 = 522,
+    OEM_ERROR_23 = 523,
+    OEM_ERROR_24 = 524,
+    OEM_ERROR_25 = 525,
+
+    RIL_E_SPRD_BASE = 600,
+    RIL_E_INVALID_PARAMETER = RIL_E_SPRD_BASE + 1,
+};
+
+enum ExtRadioResponseType : int32_t {
+    SOLICITED,
+    SOLICITED_ACK,
+    SOLICITED_ACK_EXP,
+};
+
+enum ExtRadioIndicationType : int32_t {
+    UNSOLICITED,
+    UNSOLICITED_ACK_EXP,
+};
+
+struct ExtRadioResponseInfo {
+    ExtRadioResponseType type;               // Response type
+    int32_t serial;                       // Serial number of the request
+    ExtRadioError error;                     // Response error
+};
+
+enum ExtPersoSubstate : int32_t {
+    UNKNOWN,                              // initial state
+    IN_PROGRESS,                          // in between each lock transition
+    READY,                                // when either SIM or RUIM Perso is finished since each
+                                          // app must only have 1 active perso involved
+    SIM_NETWORK,
+    SIM_NETWORK_SUBSET,
+    SIM_CORPORATE,
+    SIM_SERVICE_PROVIDER,
+    SIM_SIM,
+    SIM_NETWORK_PUK,                      // The corresponding perso lock is blocked
+    SIM_NETWORK_SUBSET_PUK,
+    SIM_CORPORATE_PUK,
+    SIM_SERVICE_PROVIDER_PUK,
+    SIM_SIM_PUK,
+    RUIM_NETWORK1,
+    RUIM_NETWORK2,
+    RUIM_HRPD,
+    RUIM_CORPORATE,
+    RUIM_SERVICE_PROVIDER,
+    RUIM_RUIM,
+    RUIM_NETWORK1_PUK,                    // The corresponding perso lock is blocked
+    RUIM_NETWORK2_PUK,
+    RUIM_HRPD_PUK,
+    RUIM_CORPORATE_PUK,
+    RUIM_SERVICE_PROVIDER_PUK,
+    RUIM_RUIM_PUK,
+
+    RIL_EXT_PERSOSUBSTATE_BASE = 24,
+    RIL_PERSOSUBSTATE_SIMLOCK_FOREVER = RIL_EXT_PERSOSUBSTATE_BASE + 1,
+};
+
+enum ExtCardState : int32_t {
+    ABSENT,
+    PRESENT,
+    ERROR,
+    RESTRICTED,                           // card is present but not usable due to carrier
+                                          // restrictions
+};
+
+enum ExtPinState : int32_t {
+    UNKNOWN,
+    ENABLED_NOT_VERIFIED,
+    ENABLED_VERIFIED,
+    DISABLED,
+    ENABLED_BLOCKED,
+    ENABLED_PERM_BLOCKED,
+};
+
+enum ExtAppType : int32_t {
+    UNKNOWN,
+    SIM,
+    USIM,
+    RUIM,
+    CSIM,
+    ISIM,
+};
+
+enum ExtAppState : int32_t {
+    UNKNOWN,
+    DETECTED,
+    PIN,                                  // If PIN1 or UPin is required
+    PUK,                                  // If PUK1 or Puk for UPin is required
+    SUBSCRIPTION_PERSO,                   // perso_substate must be look at when app_state is
+                                          // assigned to this value
+    READY,
+};
+
+struct ExtAppStatus {
+    ExtAppType appType;
+    ExtAppState appState;
+    ExtPersoSubstate persoSubstate;       // applicable only if app_state == SUBSCRIPTION_PERSO
+    string aidPtr;                        // e.g., from 0xA0, 0x00 -> 0x41,
+                                          // 0x30, 0x30, 0x30
+    string appLabelPtr;
+    int32_t pin1Replaced;                 // applicable to USIM, CSIM and ISIM
+    ExtPinState pin1;
+    ExtPinState pin2;
+};
+
+struct ExtCardStatus {
+    ExtCardState cardState;
+    ExtPinState universalPinState;        // applicable to USIM and CSIM
+    int32_t gsmUmtsSubscriptionAppIndex;  // value < RadioConst:CARD_MAX_APPS, -1 if none
+    int32_t cdmaSubscriptionAppIndex;     // value < RadioConst:CARD_MAX_APPS, -1 if none
+    int32_t imsSubscriptionAppIndex;      // value < RadioConst:CARD_MAX_APPS, -1 if none
+    vec<ExtAppStatus> applications;       // size <= RadioConst:CARD_MAX_APPS
+};
+
+struct ExtIccIo {
+    int32_t command;                      // one of the commands listed for TS 27.007 +CRSM
+    int32_t fileId;                       // EF id
+    string path;                          // "pathid" from TS 27.007 +CRSM command.
+                                          // Path is in hex ascii format eg "7f205f70"
+                                          // Path must always be provided.
+    int32_t p1;                           // Values of p1, p2 and p3 defined as per 3GPP TS 51.011
+    int32_t p2;
+    int32_t p3;
+    string data;                          // information to be written to the SIM
+    string pin2;
+    string aid;                           // AID value, See ETSI 102.221 8.1 and 101.220 4, empty
+                                          // string if no value.
+};
+
+struct ExtIccIoResult {
+    int32_t sw1;
+    int32_t sw2;
+    string simResponse;                   // In hex string format ([a-fA-F0-9]*), except for
+                                          // SIM_AUTHENTICATION response for which it is in
+                                          // Base64 format, see 3GPP TS 31.102 7.1.2
+};
+
+enum ExtDataProfileId : int32_t {
+    DEFAULT = 0,
+    TETHERED = 1,
+    IMS = 2,
+    FOTA = 3,
+    CBS = 4,
+    OEM_BASE = 1000,                      // Start of OEM-specific profiles
+    INVALID = 0xFFFFFFFF,
+};
+
+enum ExtApnAuthType : int32_t {
+    NO_PAP_NO_CHAP,                       // PAP and CHAP is never performed.
+    PAP_NO_CHAP,                          // PAP may be performed; CHAP is never performed.
+    NO_PAP_CHAP,                          // CHAP may be performed; PAP is never performed.
+    PAP_CHAP                              // PAP / CHAP may be performed - baseband dependent.
+};
+
+enum ExtDataProfileInfoType : int32_t {
+    COMMON,
+    THREE_GPP,
+    THREE_GPP2
+};
+
+enum ExtApnTypes : int32_t {
+    NONE = 0,                             // None
+    DEFAULT = 1 << 0,                     // APN type for default data traffic
+    MMS = 1 << 1,                         // APN type for MMS traffic
+    SUPL = 1 << 2,                        // APN type for SUPL assisted GPS
+    DUN = 1 << 3,                         // APN type for DUN traffic
+    HIPRI = 1 << 4,                       // APN type for HiPri traffic
+    FOTA = 1 << 5,                        // APN type for FOTA
+    IMS = 1 << 6,                         // APN type for IMS
+    CBS = 1 << 7,                         // APN type for CBS
+    IA = 1 << 8,                          // APN type for IA Initial Attach APN
+    EMERGENCY = 1 << 9,                   // APN type for Emergency PDN. This is not an IA apn,
+                                          // but is used for access to carrier services in an
+                                          // emergency call situation.
+    ALL = DEFAULT | MMS | SUPL | DUN | HIPRI | FOTA | IMS | CBS | IA | EMERGENCY,
+};
+
+enum ExtRadioTechnology : int32_t {
+    UNKNOWN = 0,
+    GPRS = 1,
+    EDGE = 2,
+    UMTS = 3,
+    IS95A = 4,
+    IS95B = 5,
+    ONE_X_RTT = 6,
+    EVDO_0 = 7,
+    EVDO_A = 8,
+    HSDPA = 9,
+    HSUPA = 10,
+    HSPA = 11,
+    EVDO_B = 12,
+    EHRPD = 13,
+    LTE = 14,
+    HSPAP = 15,                           // HSPA+
+    GSM = 16,                             // Only supports voice
+    TD_SCDMA = 17,
+    IWLAN = 18,
+    LTE_CA = 19,
+};
+
+enum ExtRadioAccessFamily : int32_t {
+    UNKNOWN = 1 << ExtRadioTechnology:UNKNOWN,
+    GPRS = 1 << ExtRadioTechnology:GPRS,
+    EDGE = 1 << ExtRadioTechnology:EDGE,
+    UMTS = 1 << ExtRadioTechnology:UMTS,
+    IS95A = 1 << ExtRadioTechnology:IS95A,
+    IS95B = 1 << ExtRadioTechnology:IS95B,
+    ONE_X_RTT = 1 << ExtRadioTechnology:ONE_X_RTT,
+    EVDO_0 = 1 << ExtRadioTechnology:EVDO_0,
+    EVDO_A = 1 << ExtRadioTechnology:EVDO_A,
+    HSDPA = 1 << ExtRadioTechnology:HSDPA,
+    HSUPA = 1 << ExtRadioTechnology:HSUPA,
+    HSPA = 1 << ExtRadioTechnology:HSPA,
+    EVDO_B = 1 << ExtRadioTechnology:EVDO_B,
+    EHRPD = 1 << ExtRadioTechnology:EHRPD,
+    LTE = 1 << ExtRadioTechnology:LTE,
+    HSPAP = 1 << ExtRadioTechnology:HSPAP,
+    GSM = 1 << ExtRadioTechnology:GSM,
+    TD_SCDMA = 1 << ExtRadioTechnology:TD_SCDMA,
+    LTE_CA = 1 << ExtRadioTechnology:LTE_CA
+};
+
+enum ExtPreferredNetworkType : int32_t {
+    GSM_WCDMA,                            // GSM/WCDMA (WCDMA preferred)
+    GSM_ONLY,                             // GSM only
+    WCDMA,                                // WCDMA
+    GSM_WCDMA_AUTO,                       // GSM/WCDMA (auto mode, according to PRL)
+    CDMA_EVDO_AUTO,                       // CDMA and EvDo (auto mode, according to PRL)
+    CDMA_ONLY,                            // CDMA only
+    EVDO_ONLY,                            // EvDo only
+    GSM_WCDMA_CDMA_EVDO_AUTO,             // GSM/WCDMA, CDMA, and EvDo (auto mode, according to PRL)
+    LTE_CDMA_EVDO,                        // LTE, CDMA and EvDo
+    LTE_GSM_WCDMA,                        // LTE, GSM/WCDMA
+    LTE_CMDA_EVDO_GSM_WCDMA,              // LTE, CDMA, EvDo, GSM/WCDMA
+    LTE_ONLY,                             // LTE only
+    LTE_WCDMA,                            // LTE/WCDMA
+    TD_SCDMA_ONLY,                        // TD-SCDMA only
+    TD_SCDMA_WCDMA,                       // TD-SCDMA and WCDMA
+    TD_SCDMA_LTE,                         // TD-SCDMA and LTE
+    TD_SCDMA_GSM,                         // TD-SCDMA and GSM
+    TD_SCDMA_GSM_LTE,                     // TD-SCDMA,GSM and LTE
+    TD_SCDMA_GSM_WCDMA,                   // TD-SCDMA, GSM/WCDMA
+    TD_SCDMA_WCDMA_LTE,                   // TD-SCDMA, WCDMA and LTE
+    TD_SCDMA_GSM_WCDMA_LTE,               // TD-SCDMA, GSM/WCDMA and LTE
+    TD_SCDMA_GSM_WCDMA_CDMA_EVDO_AUTO,    // TD-SCDMA, GSM/WCDMA, CDMA and EvDo
+    TD_SCDMA_LTE_CDMA_EVDO_GSM_WCDMA,     // TD-SCDMA, LTE, CDMA, EvDo GSM/WCDMA
+};
+
+
+enum ExtMvnoType : int32_t {
+    NONE,                                 // None
+    IMSI,                                 // The matching data is based on IMSI.
+    GID,                                  // The matching data is based on group id.
+    SPN,                                  // The matching data is based service provider name.
+};
+
+struct ExtDataProfileInfo {
+    ExtDataProfileId profileId;           // id of the data profile
+    string apn;                           // The APN to connect to
+    string protocol;                      // One of the PDP_type values in TS 27.007 section 10.1.1.
+                                          // For example, "IP", "IPV6", "IPV4V6", or "PPP".
+    string roamingProtocol;               // one of the PDP_type values in TS 27.007 section 10.1.1
+                                          // used on roaming network. For example, "IP", "IPV6",
+                                          // "IPV4V6", or "PPP".
+    ExtApnAuthType authType;              // APN authentication type
+    string user;                          // The username for APN, or empty string
+    string password;                      // The password for APN, or empty string
+    ExtDataProfileInfoType type;          // Data profile technology type
+    int32_t maxConnsTime;                 // The period in seconds to limit the maximum connections
+    int32_t maxConns;                     // The maximum connections during maxConnsTime
+    int32_t waitTime;                     // The required wait time in seconds after a successful UE
+                                          // initiated disconnect of a given PDN connection before
+                                          // the device can send a new PDN connection request for
+                                          // that given PDN
+    bool enabled;                         // True to enable the profile, false to disable
+    bitfield<ExtApnTypes> supportedApnTypesBitmap; // Supported APN types bitmap. See ApnTypes for the
+                                          // value of each bit.
+    bitfield<ExtRadioAccessFamily> bearerBitmap; // The bearer bitmap. See RadioAccessFamily for the
+                                          // value of each bit.
+    int32_t mtu;                          // Maximum transmission unit (MTU) size in bytes
+    ExtMvnoType mvnoType;                 // The MVNO matching data type
+    string mvnoMatchData;                 // MVNO matching data. This is defined by the carrier.
+                                          // For example,
+                                          //      SPN like: "A MOBILE", "BEN NL", etc...
+                                          //      IMSI like: "302720x94", "2060188", etc...
+                                          //      GID like: "4E", "33", etc...
+};
+
+enum ExtCallState : int32_t {
+    ACTIVE,
+    HOLDING,
+    DIALING,                              // MO call only
+    ALERTING,                             // MO call only
+    INCOMING,                             // MT call only
+    WAITING,                              // MT call only
+};
+
+/**
+ * User-to-User signaling Info activation types derived from 3GPP 23.087 v8.0
+ */
+enum ExtUusType : int32_t {
+    TYPE1_IMPLICIT,
+    TYPE1_REQUIRED,
+    TYPE1_NOT_REQUIRED,
+    TYPE2_REQUIRED,
+    TYPE2_NOT_REQUIRED,
+    TYPE3_REQUIRED,
+    TYPE3_NOT_REQUIRED,
+};
+
+/**
+ * User-to-User Signaling Information data coding schemes. Possible values for
+ * Octet 3 (Protocol Discriminator field) in the UUIE. The values have been
+ * specified in section 10.5.4.25 of 3GPP TS 24.008
+ */
+enum ExtUusDcs : int32_t {
+    USP,                                  // User specified protocol
+    OSIHLP,                               // OSI higher layer protocol
+    X244,                                 // X.244
+    RMCF,                                 // Reserved for system management convergence function
+    IA5C,                                 // IA5 characters
+};
+
+/**
+ * User-to-User Signaling Information defined in 3GPP 23.087 v8.0
+ */
+struct ExtUusInfo {
+    ExtUusType uusType;                      // UUS Type
+    ExtUusDcs uusDcs;                        // UUS Data Coding Scheme
+    string uusData;                          // UUS data
+};
+
+/******************************************************************************
+                             Newly Added Structs and Enums
+******************************************************************************/
+struct NetworkList {
+    string operatorNumeric;
+
+    int32_t act;
+};
+
+/* IMS @{ */
+struct CallForwardInfoUri {
+    int32_t status;
+
+    /*
+     * For RIL_REQUEST_QUERY_CALL_FORWARD_STATUS
+     * status 1 = active, 0 = not active
+     *
+     * For RIL_REQUEST_SET_CALL_FORWARD:
+     * status(mode) is:
+     * 0 = disable
+     * 1 = enable
+     * 2 = query
+     * 3 = registration
+     * 4 = erasure
+     */
+    int32_t reason;
+
+    /* from TS 27.007 7.11 "reason" */
+    int32_t numberType;
+
+    /* Indicating type of information in parameter */
+    int32_t ton;
+
+    /* "type" from TS 27.007 7.11 */
+    string number;
+
+    /* "number" from TS 27.007 7.11. May be NULL */
+    int32_t serviceClass;
+
+    /* From 27.007 +CCFC/+CLCK "class"
+     See table for Android mapping from
+     MMI service code
+     0 means user doesn't input class */
+    string ruleset;
+
+    /* element of communication diversion XML document, refer 3GPP TS 24.604 [132]*/
+    int32_t timeSeconds;
+};
+
+/* for CF no reply only */
+struct CallVoLTE {
+    /* parameter from +CLCCS:
+     * [+CLCCS: <ccid1>,<dir>,<neg_status_present>,<neg_status>,<SDP_md>,
+     * <cs_mode>,<ccstatus>,<mpty>,[,<numbertype>,<ton>,<number>
+     * [,<priority_present>,<priority>[,<CLI_validity_present>,<CLI_validity>]]]
+     */
+    int32_t index;
+
+    /* CLCCS parameter:<ccid1> */
+    int8_t /* NOTE: char */ isMT;
+
+    /* CLCCS parameter:<dir> nonzero if call is mobile terminated*/
+    int32_t negStatusPresent;
+
+    /*CLCCS parameter:<neg_status_present>*/
+    int32_t negStatus;
+
+    /*CLCCS parameter:<neg_status>*/
+    string mediaDescription;
+
+    /*CLCCS parameter:<SDP_md>*/
+    int32_t csMode;
+
+    /*CLCCS parameter: <cs_mode> */
+    ExtCallState state;
+
+    /*CLCCS parameter:<ccstatus>*/
+    int32_t mpty;
+
+    /*CLCCS parameter:<mpty> nonzero if is mpty call */
+    int32_t numberType;
+
+    /*CLCCS parameter:<numbertype>*/
+    int32_t toa;
+
+    /*CLCCS parameter:<ton> type of address, eg 145 = intl */
+    string number;
+
+    /*CLCCS parameter:<number> Remote party number */
+    int32_t prioritypresent;
+
+    /*CLCCS parameter:<priority_present> nonzero if priority has valid info*/
+    int32_t priority;
+
+    /*CLCCS parameter:<priority> eMLPP level*/
+    int32_t cliValidityPresent;
+
+    /*CLCCS parameter:<CLI_validity_present> nonzero if CLI_validity has valid info*/
+    int32_t numberPresentation;
+
+    /*CLCCS parameter:<CLI_validity> 0=Allowed, 1=Restricted, 2=Not Specified/Unknown 3=Payphone*/
+    int32_t als;
+
+    /* ALS line indicator if available
+     (0 = line 1) */
+    int8_t /* NOTE: char */ isVoicePrivacy;
+
+    /* nonzero if CDMA voice privacy mode is active */
+    string name;
+
+    /* Remote party name */
+    int32_t namePresentation;
+
+    /* 0=Allowed, 1=Restricted, 2=Not Specified/Unknown 3=Payphone */
+    int8_t /* NOTE: char */ isLoopBack;
+
+    ExtUusInfo /* * */ uusInfo;
+};
+
+/* NULL or Pointer to User-User Signaling Information */
+struct ImsPhoneCMCCSI {
+    int32_t id;
+
+    int32_t idr;
+
+    int32_t negStatPresent;
+
+    int32_t negStat;
+
+    string sdpMd;
+
+    int32_t csMod;
+
+    int32_t ccsStat;
+
+    int32_t mpty;
+
+    int32_t numType;
+
+    int32_t ton;
+
+    string number;
+
+    int32_t exitType;
+
+    int32_t exitCause;
+};
+
+/* Used by RIL_REQUEST_VIDEOPHONE_DIAL */
+struct VideoPhoneDial {
+    string address;
+
+    string subAddress;
+
+    int32_t clir;
+};
+
+/* Used by RIL_REQUEST_VIDEOPHONE_CODEC */
+struct VideoPhoneCodec {
+    int32_t type;
+};
+
+/** Used by RIL_EXT_UNSOL_VIDEOPHONE_DSCI */
+struct VideoPhoneDSCI {
+    int32_t id;
+
+    int32_t idr;
+
+    int32_t stat;
+
+    int32_t type;
+
+    int32_t mpty;
+
+    string number;
+
+    int32_t numType;
+
+    int32_t bsType;
+
+    int32_t cause;
+
+    int32_t location;
+};
+
+/* SPRD: add for VoWifi @{ */
+enum ImsHandoverType : int32_t /* NOTE: type is guessed */ {
+    IDEL_HANDOVER_TO_VOWIFI = 1,
+
+    IDEL_HANDOVER_TO_VOLTE = 2,
+
+    INCALL_HANDOVER_TO_VOWIFI = 3,
+
+    INCALL_HANDOVER_TO_VOLTE = 4,
+};
+
+enum ImsPdnStatus : int32_t /* NOTE: type is guessed */ {
+    IMS_PDN_ACTIVE_FAILED = 0,
+
+    IMS_PDN_READY = 1,
+
+    IMS_PDN_START = 2,
+};
+
+enum ImsHandoverToVoWifiResult : int32_t /* NOTE: type is guessed */ {
+    IMS_HANDOVER_REGISTER_FAIL = 0,
+
+    IMS_HANDOVER_SUCCESS = 1,
+
+    IMS_HANDOVER_PDN_BUILD_FAIL = 2,
+
+    IMS_HANDOVER_RE_REGISTER_FAIL = 3,
+
+    IMS_HANDOVER_ATTACH_FAIL = 4,
+
+    IMS_HANDOVER_ATTACH_SUCCESS = 5,
+};
+
+struct ImsNetworkInfo {
+    int32_t type;
+
+    int32_t age;
+
+    string info;
+};
+
+struct ImsErrorCauseInfo {
+    int32_t type;
+
+    int32_t errCode;
+
+    string errDescription;
+};
+
+/* SPRD: add for alpha identifier display in stk @{ */
+struct StkCallControlResult {
+    int32_t callType;
+
+    int32_t result;
+
+    int32_t isAlpha;
+
+    int32_t alphaLen;
+
+    string alphaData;
+
+    int32_t preType;
+
+    int32_t ton;
+
+    int32_t npi;
+
+    int32_t numLen;
+
+    string number;
+};
+
+/* Network Quality Parameters */
+struct LteSpeedAndSignalStrength {
+    int32_t txSpeed;
+
+    int32_t rxSpeed;
+
+    int32_t snr;
+
+    int32_t rsrp;
+};
+
+/*add for 5G CSCON.Bug1173514*/
+struct SignalConnStatus {
+    int32_t mode;
+    int32_t state;
+    int32_t access;
+    int32_t coreNetwork;
+};
+
+/* Used by RIL_EXT_UNSOL_MODEM_STATE_CHANGED @{*/
+enum ModemDetailStatus : int32_t {
+    MODEM_STATUS_ALIVE,
+    MODEM_STATUS_ASSERT,
+    MODEM_STATUS_BLOCKED,
+    MODEM_STATUS_RESET,
+};
+
+struct ModemStatusInfo {
+    ModemDetailStatus status;
+    string assertInfo;
+};
+/* @}*/

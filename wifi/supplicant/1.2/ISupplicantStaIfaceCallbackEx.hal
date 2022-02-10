@@ -1,0 +1,13 @@
+package vendor.sprd.hardware.wifi.supplicant@1.2;
+
+import android.hardware.wifi.supplicant@1.2::ISupplicantStaIfaceCallback;
+
+interface ISupplicantStaIfaceCallbackEx {
+    /**
+      * Used to indicate that a event report to upper layer.
+      *
+      * @param event.
+      */
+    oneway onEventEx(string event);
+
+};

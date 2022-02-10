@@ -1,0 +1,52 @@
+cc_library_shared {
+    // FIXME: this should only be -impl for a passthrough hal.
+    // In most cases, to convert this to a binderized implementation, you should:
+    // - change '-impl' to '-service' here and make it a cc_binary instead of a
+    //   cc_library_shared.
+    // - add a *.rc file for this module.
+    // - delete HIDL_FETCH_I* functions.
+    // - call configureRpcThreadpool and registerAsService on the instance.
+    // You may also want to append '-impl/-service' with a specific identifier like
+    // '-vendor' or '-<hardware identifier>' etc to distinguish it.
+    name: "vendor.sprd.hardware.connmgr@1.0-impl",
+    owner: "sprd",
+    relative_install_path: "hw",
+    proprietary: true,
+    srcs: [
+        "Connmgr.cpp",
+    ],
+    shared_libs: [
+        "libhidlbase",
+        "libhidltransport",
+        "libutils",
+        "libcutils",
+        "liblog",
+        "vendor.sprd.hardware.connmgr@1.0",
+    ],
+}
+
+cc_binary {
+    proprietary: true,
+    relative_install_path: "hw",
+	owner:"sprd",
+    name: "vendor.sprd.hardware.connmgr@1.0-service",
+    init_rc: ["vendor.sprd.hardware.connmgr@1.0-service.rc"],
+    srcs: [
+      "service.cpp",
+    ],
+    cflags: [
+      "-Wall",
+      "-Werror",
+    ],
+    shared_libs: [
+      "liblog",
+      "libsysutils",
+      "libdl",
+      "libutils",
+      "libcutils",
+      "libhardware",
+      "libhidlbase",
+      "libhidltransport",
+      "vendor.sprd.hardware.connmgr@1.0",
+    ],
+}

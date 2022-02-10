@@ -1,0 +1,8 @@
+service vendor.soter_hal /vendor/bin/hw/vendor.sprd.hardware.soter@1.0-service
+    class hal
+    user system
+    group system
+    interface vendor.sprd.hardware.soter@1.0::ISoter default
+    oneshot
+    disabled
+

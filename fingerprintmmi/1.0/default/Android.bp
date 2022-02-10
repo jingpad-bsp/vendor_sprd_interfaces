@@ -1,0 +1,53 @@
+cc_library_shared {
+    name: "vendor.sprd.hardware.fingerprintmmi@1.0-impl",
+    defaults: ["hidl_defaults"],
+    vendor: true,
+    relative_install_path: "hw",
+    srcs: ["Fingerprintmmi.cpp"],
+
+    shared_libs: [
+        "libbase",
+        "liblog",
+        "libhidlbase",
+        "libhidltransport",
+        "libhardware",
+        "libutils",
+        "vendor.sprd.hardware.fingerprintmmi@1.0",
+    ],
+
+}
+
+cc_defaults {
+    name: "fingerprintmmi_service_defaults",
+    relative_install_path: "hw",
+    defaults: ["hidl_defaults"],
+    vendor: true,
+
+    shared_libs: [
+        "liblog",
+        "libbase",
+        "libdl",
+        "libutils",
+        "libhardware",
+        "libhidlbase",
+        "libhidltransport",
+        "vendor.sprd.hardware.fingerprintmmi@1.0",
+    ],
+}
+
+cc_binary {
+    name: "vendor.sprd.hardware.fingerprintmmi@1.0-service",
+    defaults: ["fingerprintmmi_service_defaults"],
+    init_rc: ["vendor.sprd.hardware.fingerprintmmi@1.0-service.rc"],
+    vintf_fragments: ["vendor.sprd.hardware.fingerprintmmi@1.0-service.xml"],
+    srcs: ["service.cpp"],
+}
+
+cc_binary {
+    name: "vendor.sprd.hardware.fingerprintmmi@1.0-service-lazy",
+    overrides: ["vendor.sprd.hardware.fingerprintmmi@1.0-service"],
+    defaults: ["fingerprintmmi_service_defaults"],
+    init_rc: ["vendor.sprd.hardware.fingerprintmmi@1.0-service-lazy.rc"],
+    vintf_fragments: ["vendor.sprd.hardware.fingerprintmmi@1.0-service-lazy.xml"],
+    srcs: ["serviceLazy.cpp"],
+}

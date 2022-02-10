@@ -1,0 +1,37 @@
+package vendor.sprd.hardware.wifi.supplicant@1.2;
+
+import android.hardware.wifi.supplicant@1.0::SupplicantStatus;
+import android.hardware.wifi.supplicant@1.2::ISupplicantStaIface;
+import @1.2::ISupplicantStaIfaceCallbackEx;
+
+interface ISupplicantStaIface extends android.hardware.wifi.supplicant@1.2::ISupplicantStaIface {
+    /**
+      * Set param to supplicant if needed.
+      *
+      * @return status Status of the operation.
+      *         Possible status codes:
+      *         |SupplicantStatusCode.SUCCESS|,
+      *         |SupplicantStatusCode.FAILURE_UNKNOWN|,
+      *         |SupplicantStatusCode.FAILURE_IFACE_INVALID|
+      */
+    setParamToSupplicant(string key, string value) generates (SupplicantStatus status);
+
+    /**
+      * Register for callbacks from this interface.
+      *
+      * These callbacks are invoked for events that are specific to this interface.
+      * Registration of multiple callback objects is supported. These objects must
+      * be automatically deleted when the corresponding client process is dead or
+      * if this interface is removed.
+      *
+      * @param callback An instance of the |ISupplicantStaIfaceCallback| HIDL
+      *        interface object.
+      * @return status Status of the operation.
+      *         Possible status codes:
+      *         |SupplicantStatusCode.SUCCESS|,
+      *         |SupplicantStatusCode.FAILURE_UNKNOWN|,
+      *         |SupplicantStatusCode.FAILURE_IFACE_INVALID|
+      */
+    registerCallback_sprd_1_2(ISupplicantStaIfaceCallbackEx callback)
+        generates (SupplicantStatus status);
+};

@@ -1,0 +1,2 @@
+#for fingerprint apk mmi
+vendor.sprd.hardware.fingerprintmmi::IFingerprintmmi               u:object_r:hal_fingerprintmmi_hwservice:s0

@@ -1,0 +1,40 @@
+cc_library_shared {
+    name: "vendor.sprd.hardware.enhance@1.0-impl",
+    relative_install_path: "hw",
+    proprietary: true,
+    srcs: [
+        "Enhance.cpp",
+    ],
+    shared_libs: [
+        "libhidlbase",
+        "libhidltransport",
+        "libutils",
+        "liblog",
+        "libhardware",
+        "vendor.sprd.hardware.enhance@1.0",
+    ],
+}
+
+cc_binary {
+    proprietary: true,
+    relative_install_path: "hw",
+    name: "vendor.sprd.hardware.enhance@1.0-service",
+    init_rc: ["vendor.sprd.hardware.enhance@1.0-service.rc"],
+    srcs: ["service.cpp"],
+
+    cflags: [
+        "-Wall",
+        "-Werror",
+    ],
+
+    shared_libs: [
+        "liblog",
+        "libdl",
+        "libutils",
+        "libhardware",
+        "libhidlbase",
+        "libhidltransport",
+        "vendor.sprd.hardware.enhance@1.0",
+    ],
+
+}

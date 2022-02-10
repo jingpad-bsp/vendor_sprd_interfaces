@@ -1,0 +1,2 @@
+allow sprd_autoslt_app hal_fingerprintmmi_hwservice:hwservice_manager find;
+allow sprd_autoslt_app hal_fingerprintmmi_default:binder { call };

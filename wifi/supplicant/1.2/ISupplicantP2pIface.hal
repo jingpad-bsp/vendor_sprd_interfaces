@@ -1,0 +1,29 @@
+package vendor.sprd.hardware.wifi.supplicant@1.2;
+
+import android.hardware.wifi.supplicant@1.0::SupplicantStatus;
+import android.hardware.wifi.supplicant@1.2::ISupplicantP2pIface;
+
+interface ISupplicantP2pIface extends android.hardware.wifi.supplicant@1.2::ISupplicantP2pIface {
+    /**
+      * Set param to p2p supplicant if needed.
+      *
+      * @return status Status of the operation.
+      *         Possible status codes:
+      *         |SupplicantStatusCode.SUCCESS|,
+      *         |SupplicantStatusCode.FAILURE_UNKNOWN|,
+      *         |SupplicantStatusCode.FAILURE_IFACE_INVALID|
+      */
+    setParamToP2pSupplicant(string key, string value) generates (SupplicantStatus status);
+
+    /**
+      * Get param from p2p supplicant.
+      * @param key of parameter.
+      * @return status Status of the operation.
+      *         Possible status codes:
+      *         |SupplicantStatusCode.SUCCESS|,
+      *         |SupplicantStatusCode.FAILURE_UNKNOWN|,
+      *         |SupplicantStatusCode.FAILURE_IFACE_INVALID|
+      * @return the config value of key.
+      */
+    getParamToP2pSupplicant(string key) generates (SupplicantStatus status, uint32_t value);
+};

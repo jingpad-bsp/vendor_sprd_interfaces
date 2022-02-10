@@ -1,0 +1,8 @@
+package vendor.sprd.hardware.radio.lite@1.0;
+
+/**
+ * Interface declaring extension unsolicited lite radio indications.
+ */
+interface ILiteRadioIndication {
+    oneway sendCmdInd(LiteRadioIndicationType type, string data);
+};

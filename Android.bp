@@ -1,0 +1,17 @@
+subdirs = [
+    "*"
+]
+
+cc_defaults {
+    name: "hidl_vendors",
+    cflags: [
+        "-Wall",
+        "-Werror",
+    ],
+}
+
+hidl_package_root {
+    name: "vendor.sprd.hardware",
+    path: "vendor/sprd/interfaces",
+}
+

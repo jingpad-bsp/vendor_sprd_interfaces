@@ -1,0 +1,10 @@
+package vendor.sprd.hardware.radio.lite@1.0;
+
+/**
+ * Interface declaring response functions to solicited lite radio requests.
+ * Response functions defined in this interface are as per following convention:
+ * <xyz>Response is response to ILiteRadio.<xyz>
+ */
+interface ILiteRadioResponse {
+    oneway sendCmdResponse(LiteRadioResponseInfo info, string response);
+};

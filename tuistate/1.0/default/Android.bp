@@ -1,0 +1,32 @@
+cc_binary {
+    name: "vendor.sprd.hardware.tuistate@1.0-service",
+    relative_install_path: "hw",
+    proprietary: true,
+    init_rc: ["vendor.sprd.hardware.tuistate@1.0-service.rc"],
+    vintf_fragments: ["manifest_tuistate.xml"],
+
+    srcs: [
+       "service.cpp",
+       "Tuistate.cpp",
+    ],
+
+    cflags: [
+        "-Wall",
+        "-Werror",
+    ],
+
+    shared_libs: [
+        "liblog",
+        "libutils",
+        "libhidlbase",
+        "libhidltransport",
+        "vendor.sprd.hardware.tuistate@1.0",
+    ],
+
+    sanitize: {
+        cfi: true,
+        diag: {
+            cfi: true,
+        },
+    },
+}

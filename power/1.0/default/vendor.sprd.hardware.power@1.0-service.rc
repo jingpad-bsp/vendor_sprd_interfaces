@@ -1,0 +1,4 @@
+service vendor.power-hal-1-0-sprd /vendor/bin/hw/vendor.sprd.hardware.power@1.0-service
+    class hal
+    user system
+    group system

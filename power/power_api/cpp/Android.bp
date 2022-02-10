@@ -1,0 +1,21 @@
+cc_library_shared {
+    name: "libpowerhal_cli",
+    owner: "sprd",
+    vendor_available: true,
+    shared_libs: [
+        "libhidlbase",
+        "libhidltransport",
+        "libhwbinder",
+        "liblog",
+        "libutils",
+        "libcutils",
+        "vendor.sprd.hardware.power@4.0",
+    ],
+    export_include_dirs: ["."],
+    export_shared_lib_headers: [
+        "vendor.sprd.hardware.power@4.0",
+    ],
+    srcs: [
+        "power_hal_cli.cpp",
+    ],
+}

@@ -1,0 +1,63 @@
+package vendor.sprd.hardware.wifi.supplicant@1.2;
+
+import android.hardware.wifi.supplicant@1.0::SupplicantStatus;
+import android.hardware.wifi.supplicant@1.0::ISupplicantStaNetwork;
+import android.hardware.wifi.supplicant@1.2::ISupplicantStaNetwork;
+import @1.2::ISupplicantStaNetworkCallbackEx;
+
+interface ISupplicantStaNetwork extends android.hardware.wifi.supplicant@1.2::ISupplicantStaNetwork {
+    /**
+      * Set some prime param for network.
+      *
+      * @param key and value to set.
+      * @return status Status of the operation.
+      *         Possible status codes:
+      *         |SupplicantStatusCode.SUCCESS|,
+      *         |SupplicantStatusCode.FAILURE_ARGS_INVALID|,
+      *         |SupplicantStatusCode.FAILURE_UNKNOWN|,
+      *         |SupplicantStatusCode.FAILURE_NETWORK_INVALID|
+      */
+    setNetworkParam(string key, string value) generates (SupplicantStatus status);
+
+    /**
+      * Get some private value for this network.
+      *
+      * @param key to get.
+      * @return status Status of the operation.
+      *         Possible status codes:
+      *         |SupplicantStatusCode.SUCCESS|,
+      *         |SupplicantStatusCode.FAILURE_ARGS_INVALID|,
+      *         |SupplicantStatusCode.FAILURE_UNKNOWN|,
+      *         |SupplicantStatusCode.FAILURE_NETWORK_INVALID|
+      */
+    getNetworkParam(string key) generates (SupplicantStatus status, string value);
+
+    /** Possble mask of values for KeyMgmt param. */
+    enum KeyMgmtMaskEx : android.hardware.wifi.supplicant@1.2::ISupplicantStaNetwork.KeyMgmtMask {
+      WAPI_PSK = 1 << 12,
+      WAPI_CERT = 1 << 13
+    };
+
+    enum ProtoMaskEx : android.hardware.wifi.supplicant@1.0::ISupplicantStaNetwork.ProtoMask {
+      WAPI = 1 << 2
+    };
+
+    /**
+      * Register for callbacks from this network.
+      *
+      * These callbacks are invoked for events that are specific to this network.
+      * Registration of multiple callback objects is supported. These objects must
+      * be automatically deleted when the corresponding client process is dead or
+      * if this network is removed.
+      *
+      * @param callback An instance of the |ISupplicantStaNetworkCallback| HIDL
+      *        interface object.
+      * @return status Status of the operation.
+      *         Possible status codes:
+      *         |SupplicantStatusCode.SUCCESS|,
+      *         |SupplicantStatusCode.FAILURE_UNKNOWN|,
+      *         |SupplicantStatusCode.FAILURE_NETWORK_INVALID|
+      */
+    registerCallback_sprd_1_2(ISupplicantStaNetworkCallbackEx callback)
+      generates (SupplicantStatus status);
+};

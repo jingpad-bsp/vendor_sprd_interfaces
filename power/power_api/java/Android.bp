@@ -1,0 +1,17 @@
+java_library_static {
+    name: "sprd.halmanager",
+
+    srcs: [
+        "android/os/PowerHALManager.java",
+        "android/os/PowerHintVendorSprd.java",
+    ],
+
+    libs: [
+        "android.hidl.base-V1.0-java",
+    ],
+
+    static_libs: [
+        "vendor.sprd.hardware.power-V4.0-java",
+    ],
+
+}

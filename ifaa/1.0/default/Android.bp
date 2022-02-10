@@ -1,0 +1,58 @@
+cc_library_shared {
+    name: "vendor.sprd.hardware.ifaa@1.0-impl",
+    relative_install_path: "hw",
+    proprietary: true,
+    srcs: [
+        "Ifaa.cpp",
+    ],
+
+    shared_libs: [
+        "liblog",
+        "libhidlbase",
+        "libhidltransport",
+        "libutils",
+        "libhardware",
+        "vendor.sprd.hardware.ifaa@1.0",
+    ],
+
+    sanitize: {
+        cfi: true,
+        diag: {
+            cfi: true,
+        },
+    },
+}
+
+cc_binary {
+    proprietary: true,
+    relative_install_path: "hw",
+    name: "vendor.sprd.hardware.ifaa@1.0-service",
+    init_rc: ["vendor.sprd.hardware.ifaa@1.0-service.rc"],
+    srcs: [
+	   "service.cpp",
+    ],
+
+    cflags: [
+        "-Wall",
+        "-Werror",
+    ],
+
+    shared_libs: [
+        "liblog",
+        "libsysutils",
+        "libdl",
+        "libutils",
+	"libcutils",
+        "libhardware",
+        "libhidlbase",
+        "libhidltransport",
+        "vendor.sprd.hardware.ifaa@1.0",
+    ],
+
+    sanitize: {
+        cfi: true,
+        diag: {
+            cfi: true,
+        },
+    },
+}

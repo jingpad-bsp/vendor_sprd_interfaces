@@ -1,0 +1,28 @@
+#include "AprdCallback.h"
+
+namespace vendor {
+namespace sprd {
+namespace hardware {
+namespace aprd {
+namespace V1_0 {
+namespace implementation {
+
+// Methods from ::vendor::sprd::hardware::aprd::V1_0::IAprdCallback follow.
+Return<void> AprdCallback::triger(const hidl_string& cmd, const ::vendor::sprd::hardware::aprd::V1_0::e_info_V& ei) {
+    // TODO implement
+    return Void();
+}
+
+
+// Methods from ::android::hidl::base::V1_0::IBase follow.
+
+//IAprdCallback* HIDL_FETCH_IAprdCallback(const char* /* name */) {
+    //return new AprdCallback();
+//}
+//
+}  // namespace implementation
+}  // namespace V1_0
+}  // namespace aprd
+}  // namespace hardware
+}  // namespace sprd
+}  // namespace vendor

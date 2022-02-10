@@ -1,0 +1,26 @@
+package vendor.sprd.hardware.aprd@1.0;
+
+enum EExceptionType_V : int32_t{
+    E_ANR,
+    E_NATIVE_CRASH,
+    E_JAVA_CRASH,
+    E_MODEM_BLOCKED,
+    E_MODEM_ASSERT,
+    E_WCN_ASSERT,
+    E_WCN_GE2,
+    E_BOOTMODE,
+    E_RAM_USED,
+    E_SYSTEM_REBOOT,
+
+    I_MODEMVER_GET,
+    I_IMEI_GET,
+    I_CP2VER_GET,
+    I_GPSVER_GET,
+    I_MODEMMODE_FLASH,
+    E_MAXNUM,
+};
+
+struct e_info_V {
+    EExceptionType_V et;
+    string private_data;
+};

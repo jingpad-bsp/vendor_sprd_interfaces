@@ -1,0 +1,83 @@
+cc_library_shared {
+    // FIXME: this should only be -impl for a passthrough hal.
+    // In most cases, to convert this to a binderized implementation, you should:
+    // - change '-impl' to '-service' here and make it a cc_binary instead of a
+    //   cc_library_shared.
+    // - add a *.rc file for this module.
+    // - delete HIDL_FETCH_I* functions.
+    // - call configureRpcThreadpool and registerAsService on the instance.
+    // You may also want to append '-impl/-service' with a specific identifier like
+    // '-vendor' or '-<hardware identifier>' etc to distinguish it.
+    name: "vendor.sprd.hardware.gnss@2.0-impl",
+    owner: "sprd",
+    relative_install_path: "hw",
+    proprietary: true,
+    srcs: [
+        "AGnss.cpp",
+        "AGnssRil.cpp",
+        "GnssBatching.cpp",
+        "GnssConfiguration.cpp",
+        "GnssDebug.cpp",
+        "Gnss.cpp",
+        "GnssGeofencing.cpp",
+        "GnssMeasurement.cpp",
+        "GnssNavigationMessage.cpp",
+        "GnssNi.cpp",
+        "GnssUnisocExt.cpp",
+        "GnssUnisocExtCallback.cpp",
+        "GnssXtra.cpp",
+        "GnssUtils.cpp",
+        "GnssMeasurementCorrections.cpp",
+        "GnssVisibilityControl.cpp",
+        "ThreadCreationWrapper.cpp",
+    ],
+    shared_libs: [
+        "liblog",
+        "libhidlbase",
+        "libhidltransport",
+        "libutils",
+        "libhardware",
+        "libcutils",
+        "libdl",
+        "libbase",
+        "libbinder",
+        "libhidlbase",
+        "libhidltransport",
+        "android.hardware.gnss@1.0",
+        "android.hardware.gnss@1.1",
+        "android.hardware.gnss@2.0",
+        "vendor.sprd.hardware.gnss@2.0",
+        "android.hardware.gnss.measurement_corrections@1.0",
+        "android.hardware.gnss.visibility_control@1.0",
+
+    ],
+
+}
+cc_binary {
+    relative_install_path: "hw",
+    vendor: true,
+    name: "vendor.sprd.hardware.gnss@2.0-service",
+    defaults: ["hidl_defaults"],
+    vintf_fragments: ["vendor.sprd.hardware.gnss@2.0-service.xml"],
+    init_rc: ["vendor.sprd.hardware.gnss@2.0-service.rc"],
+    srcs: ["service.cpp"],
+
+    shared_libs: [
+        "liblog",
+        "libcutils",
+        "libdl",
+        "libbase",
+        "libutils",
+        "libhardware",
+        "libbinder",
+        "libhidlbase",
+        "libhidltransport",
+        "android.hardware.gnss.measurement_corrections@1.0",
+        "android.hardware.gnss.visibility_control@1.0",
+        "android.hardware.gnss@1.0",
+        "android.hardware.gnss@1.1",
+        "android.hardware.gnss@2.0",
+        "vendor.sprd.hardware.gnss@2.0",
+        "libhardware"
+    ],
+}
